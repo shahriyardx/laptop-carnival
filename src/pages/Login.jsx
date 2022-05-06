@@ -17,13 +17,13 @@ const Login = () => {
           <div className='flex flex-col gap-5'>
             <div className='flex flex-col gap-1'>
               <label>Email</label>
-              <input type='email' {...register("email", { required: true })} />
+              <input type='email' {...register("email", { required: true })} required/>
               {errors.email && <span className='text-xs text-red-400'>This field is required</span>}
             </div>
 
             <div className='flex flex-col gap-2'>
               <label>Password</label>
-              <input type='password' {...register("password", { required: true })} />
+              <input type='password' {...register("password", { required: true })} required/>
               {errors.password && <span className='text-xs text-red-400'>This field is required</span>}
             </div>
           </div>

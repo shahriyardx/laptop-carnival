@@ -16,7 +16,7 @@ const ResetPassword = () => {
           <div className='flex flex-col gap-5'>
             <div className='flex flex-col gap-1'>
               <label>Email</label>
-              <input type='email' {...register("email", { required: true })} />
+              <input type='email' {...register("email", { required: true })} required/>
               {errors.email && <span className='text-xs text-red-400'>This field is required</span>}
             </div>
           </div>
