@@ -5,3 +5,7 @@
 .nav {
   @apply h-16 flex items-center;
 }
+
+.menu {
+  @apply flex items-center gap-3 ml-auto;
+}

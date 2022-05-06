@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import Container from '../../layouts/Container'
+import CustomLink from './CustomLink'
 import styles from './Header.module.css'
 
 const Header = () => {
@@ -12,6 +13,10 @@ const Header = () => {
           <Link to='/'>
             Laptop <span className='font-light'>Carnival</span>
           </Link>
+        </div>
+
+        <div className={styles.menu}>
+          <CustomLink to='/'>Home</CustomLink>
         </div>
       </Container>
     </header>
