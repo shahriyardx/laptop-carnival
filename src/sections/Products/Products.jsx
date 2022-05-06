@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Container from '../../layouts/Container'
+import Container from '../../components/Container/Container'
 import Product from '../../components/Product/Product'
 
 const Products = () => {

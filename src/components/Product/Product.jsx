@@ -7,8 +7,8 @@ const Product = () => {
       <img src="/images/products/macbook.jpg" alt="Macbook" className='w-full aspect-video rounded-lg' />
 
       <div></div>
-      <h2 className='text-2xl font-bold my-2'>MacBook Pro 2022</h2>
-      <p className=''>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt voluptatibus laboriosam ex cupiditate...</p>
+      <h2 className='text-2xl font-bold mt-2'>MacBook Pro 2022</h2>
+      <p className='text-zinc-700 text-sm'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt voluptatibus laboriosam ex cupiditate...</p>
       
       <div className='mt-4 flex flex-col gap-1'>
         <p className='text-lg font-normal'>Supplier - <span className='font-extrabold'>Whoami</span></p>
