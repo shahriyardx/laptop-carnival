@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Container from '../../layouts/Container'
-import CustomLink from './CustomLink'
+import Container from '../../components/Container/Container'
+import CustomLink from '../../components/CustomLink/CustomLink'
 import styles from './Header.module.css'
 
 const Header = () => {

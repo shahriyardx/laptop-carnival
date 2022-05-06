@@ -1,7 +1,6 @@
 import React from 'react'
-import Container from '../layouts/Container'
+import Container from '../components/Container/Container'
 import { useForm } from 'react-hook-form'
-import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
 
 const Register = () => {
