@@ -4,8 +4,9 @@ import { useForm } from 'react-hook-form'
 
 const SingleItem = () => {
   const { register, handleSubmit, formState: { errors }} = useForm()
-  const updateStock = (e) => {
-    e.preventDefault()
+  
+  const updateStock = (data) => {
+    //
   }
   
   return (
@@ -45,7 +46,6 @@ const SingleItem = () => {
 
       <div className='mt-10'>
         <h2 className='text-3xl font-bold mb-2'>Description</h2>
-        
       </div>
     </Container>
   )

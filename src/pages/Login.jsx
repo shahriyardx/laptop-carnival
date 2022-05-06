@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from '../components/Container/Container'
 import { useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useSignInWithGoogle, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import useAuth from '../../firebase/useAuth'
 
 const Login = () => {
+  const auth = useAuth()
+  const [signInWithGoogle, google_user, google_loading, google_error] = useSignInWithGoogle(auth);
+  const [signInWithEmailAndPassword, email_pass_user, email_pass_loading, email_pass_error] = useSignInWithEmailAndPassword(auth);
+
+  const location = useLocation()
+  const navigate = useNavigate()
+  const from = location.state?.from?.pathname || "/"
+  
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    signInWithEmailAndPassword(data.email, data.password)
+  }
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+  }
+
+  useEffect(() => {
+    if (google_user || email_pass_user) {
+      navigate(from)
+    }
+  }, [google_user, email_pass_user])
 
   return (
     <div>
@@ -29,8 +51,10 @@ const Login = () => {
           </div>
           <div className='grid grid-cols-3 gap-4 mt-5'>
             <input className='py-3 bg-indigo-500 text-white rounded-md cursor-pointer' type="submit" value='Login' />
-            <button type='button' className='py-3 bg-black col-span-2 flex items-center gap-2 justify-center rounded-md text-white'><FcGoogle className='text-2xl' /> Google</button>
+            <button onClick={handleGoogleLogin} type='button' className='py-3 bg-black col-span-2 flex items-center gap-2 justify-center rounded-md text-white'><FcGoogle className='text-2xl' /> Google</button>
           </div>
+
+          <p className='text-red-500 mt-2'>{google_error ? google_error.message : email_pass_error ? email_pass_error.message : null}</p>
 
           <Link to='/register' className='block text-blue-500 mt-5'>Don't have an account?</Link>
           <Link to='/reset' className='block text-blue-500'>Forgot Password?</Link>

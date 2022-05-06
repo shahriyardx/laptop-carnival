@@ -1,10 +1,16 @@
 import React from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { signOut } from 'firebase/auth'
 import { Link } from 'react-router-dom'
+import useAuth from '../../../firebase/useAuth'
 import Container from '../../components/Container/Container'
 import CustomLink from '../../components/CustomLink/CustomLink'
 import styles from './Header.module.css'
 
 const Header = () => {
+  const auth = useAuth()
+  const [user, loading, error] = useAuthState(auth);
+  
   return (
     <header>
       <Container className={styles.nav}>
@@ -16,7 +22,14 @@ const Header = () => {
 
         <div className={styles.menu}>
           <CustomLink to='/'>Home</CustomLink>
-          <CustomLink to='/login' className={styles.login_button}>Login</CustomLink>
+          {user ? (
+            <div className='flex gap-2 items-center'>
+              <span className='font-bold'>{user.displayName}</span>
+              <button className='cursor-pointer px-3 py-2 rounded-md bg-red-500 text-white' onClick={() => signOut(auth)}>Logout</button>
+            </div>
+            ) : (
+            <CustomLink to='/login' className={styles.login_button}>Login</CustomLink>
+          )}
         </div>
       </Container>
     </header>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from "react-router-dom";
 
 import Layout from './layouts/Layout'
+import RequireAuth from '../firebase/RequireAuth';
 
 import Home from './pages/Home';
 import Inventory from './pages/inventory/Inventory';
@@ -19,8 +20,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/reset" element={<ResetPassword />} />
 
-        <Route path="/inventory" element={<Inventory />} />
-        <Route path="/inventory/:id" element={<SingleItem />} />
+        <Route path="/inventory" element={<RequireAuth><Inventory /></RequireAuth>} />
+        <Route path="/inventory/:id" element={<RequireAuth><SingleItem /></RequireAuth>} />
       </Routes>
     </Layout>
   )
