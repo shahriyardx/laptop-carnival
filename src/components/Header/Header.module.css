@@ -1,0 +1,7 @@
+.logo {
+  @apply text-2xl font-bold uppercase;
+}
+
+.nav {
+  @apply h-16 flex items-center;
+}

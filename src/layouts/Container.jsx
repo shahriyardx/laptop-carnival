@@ -1,8 +1,9 @@
 import React from 'react'
+import styles from './Container.module.css'
 
 const Container = ({ className, children, ...props }) => {
   return (
-    <div className={`container mx-auto px-4 md:px-0 ${className}`} {...props}>
+    <div className={`${styles.con} ${className}`} {...props}>
         {children}
     </div>
   )
