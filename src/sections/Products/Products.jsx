@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Container from '../../layouts/Container'
-import Product from '../../Product/Product'
+import Product from '../../components/Product/Product'
 
 const Products = () => {
   return (
