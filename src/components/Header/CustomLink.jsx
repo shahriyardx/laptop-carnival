@@ -10,7 +10,7 @@ const CustomLink = ({ children, to, ...props }) => {
   return (
     <div>
       <Link
-        className={`${styles.navlink} ${match ? styles.navlink__active : null}`}
+        className={`${styles.navlink} ${match ? styles.navlink__active : null} ${props.className}`}
         to={to}
         {...props}
       >

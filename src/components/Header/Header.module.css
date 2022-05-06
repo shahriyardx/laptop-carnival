@@ -9,3 +9,7 @@
 .menu {
   @apply flex items-center gap-3 ml-auto;
 }
+
+.login_button {
+  @apply px-3 py-2 rounded-md bg-indigo-500 text-white;
+}

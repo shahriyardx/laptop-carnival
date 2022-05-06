@@ -1,11 +1,10 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Container from '../../layouts/Container'
 import CustomLink from './CustomLink'
 import styles from './Header.module.css'
 
 const Header = () => {
-  console.log(styles.logo)
   return (
     <header>
       <Container className={styles.nav}>
@@ -17,6 +16,7 @@ const Header = () => {
 
         <div className={styles.menu}>
           <CustomLink to='/'>Home</CustomLink>
+          <CustomLink to='/login' className={styles.login_button}>Login</CustomLink>
         </div>
       </Container>
     </header>
