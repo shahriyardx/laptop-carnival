@@ -6,7 +6,7 @@ import Product from '../../components/Product/Product'
 const Products = () => {
   return (
     <Container className='py-20'>
-      <h1 className='text-3xl font-bold mb-5 text-center'>Inventory</h1>
+      <h1 className='text-4xl font-bold mb-10 text-center'>Inventory</h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10'>
         <Product />
@@ -17,8 +17,8 @@ const Products = () => {
         <Product />
       </div>
 
-      <div className='mt-5 text-center'>
-        <Link className='text-xl uppercase font-bold text-indigo-500' to="/inventory">View All</Link>
+      <div className='mt-10 text-center'>
+        <Link className='text-lg uppercase font-bold bg-green-500 px-4 py-3 text-white rounded-md' to="/inventory">Manage Inventory</Link>
       </div>
     </Container>
   )

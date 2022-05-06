@@ -11,7 +11,7 @@ const Banner = () => {
           <p className='font-light mt-2'>Our warehouse has the largest collection of laptops from all the brands in existance. Check it out.</p>
 
           <div className='mt-3'>
-            <Link to='/inventory' className='px-7 py-3 bg-indigo-500 text-white inline-block rounded-md'>Explore</Link>
+            <Link to='/inventory' className='px-7 py-3 bg-indigo-500 text-white inline-block rounded-md'>Manage Inventory</Link>
           </div>
         </div>
 
