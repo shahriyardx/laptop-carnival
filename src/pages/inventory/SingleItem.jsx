@@ -28,11 +28,29 @@ const SingleItem = () => {
       }
 
       setItem({...item, data: updatedData})
+      reset({ quantity: ''})
     } catch (err) {
       toast.error('Something went wrong while updating quantity')
     }
+  }
 
-    reset({ quantity: ''})
+  const deliverItem = async () => {
+    if (item.data.quantity <= 0) {
+      return toast.error("Item is out of stock, Can't deliver")
+    }
+
+    try {
+      const { data: updatedData } = await axios.post(`${API_URL}/inventory/${item.data._id}/delivered`)
+
+      if (updatedData.error) {
+        return toast.error(updatedData.error)
+      }
+
+      toast.success("Item delivered")
+      setItem({...item, data: updatedData})
+    } catch (err) {
+      toast.error('Something went wrong while updating quantity')
+    }
   }
 
   useEffect(() => {
@@ -83,7 +101,7 @@ const SingleItem = () => {
               </div>
 
               <div className='mt-4'>
-                <button className='px-5 py-3 font-semibold tracking-wide bg-yellow-500 rounded-md text-white'>Delivered</button>
+                <button onClick={deliverItem} className='px-5 py-3 font-semibold tracking-wide bg-yellow-500 rounded-md text-white'>Delivered</button>
               </div>
 
               <div className='mt-10'>
