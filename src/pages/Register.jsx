@@ -1,11 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from '../components/Container/Container'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import useAuth from '../../firebase/useAuth'
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth'
 
 const Register = () => {
+  const auth = useAuth()
+  const location = useLocation()
+  const navigate = useNavigate()
+  const [createUserWithEmailAndPassword, user, loading, error, ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true});
+  const [updateProfile, updating, update_error] = useUpdateProfile(auth);
+  
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  const from = location.state?.from?.pathname || "/"
+
+  const onSubmit = async data => {
+    await createUserWithEmailAndPassword(data.email, data.password)
+    await updateProfile({ displayName: data.username })
+  };
+  
+  useEffect(() => {
+    if (user && !loading && !updating) {
+      navigate(from)
+    }
+  }, [user, loading, updating])
 
   return (
     <div>
@@ -14,6 +33,12 @@ const Register = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className='max-w-[400px] mx-auto'>
           <div className='flex flex-col gap-5'>
+            <div className='flex flex-col gap-1'>
+              <label>Username</label>
+              <input type='text' {...register("username", { required: true })} required/>
+              {errors.username && <span className='text-xs text-red-400'>This field is required</span>}
+            </div>
+
             <div className='flex flex-col gap-1'>
               <label>Email</label>
               <input type='email' {...register("email", { required: true })} required/>
@@ -27,7 +52,10 @@ const Register = () => {
             </div>
           </div>
           
-          <input className='px-4 py-3 bg-indigo-500 text-white rounded-md cursor-pointer mt-5' type="submit" value='Register' />
+          <button type='submit' className='px-4 py-3 bg-indigo-500 text-white rounded-md cursor-pointer mt-5'>
+            Register
+          </button>
+          <p className='text-red-500 mt-2'>{error ? error.message : null}</p>
 
           <Link to='/login' className='block text-blue-500 mt-5'>Already have an account?</Link>
           <Link to='/reset' className='block text-blue-500'>Forgot Password?</Link>

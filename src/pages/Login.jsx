@@ -16,12 +16,12 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/"
   
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => {
-    signInWithEmailAndPassword(data.email, data.password)
+  const onSubmit = async data => {
+    await signInWithEmailAndPassword(data.email, data.password)
   }
 
-  const handleGoogleLogin = () => {
-    signInWithGoogle()
+  const handleGoogleLogin = async () => {
+    await signInWithGoogle()
   }
 
   useEffect(() => {
