@@ -5,15 +5,34 @@ import axios from 'axios'
 import { API_URL } from '../../../config'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import Markdown from 'marked-react'
+import toast from 'react-hot-toast'
 
 const SingleItem = () => {
   const [item, setItem] = useState({data: null, loaded: false})
-  const { register, handleSubmit, formState: { errors }} = useForm()
+  const { register, handleSubmit, reset, formState: { errors }} = useForm()
   const params = useParams()
   const itemId = params.id
   
-  const updateStock = (data) => {
-    //
+  const updateStock = async (data) => {
+    const quantity = data.quantity
+
+    if (!quantity || quantity < 1) {
+      return toast.error('Quantity must 1 or more.')
+    }
+
+    try {
+      const { data: updatedData } = await axios.put(`${API_URL}/inventory/${item.data._id}/restock`, data)
+
+      if (updatedData.error) {
+        return toast.error(updatedData.error)
+      }
+
+      setItem({...item, data: updatedData})
+    } catch (err) {
+      toast.error('Something went wrong while updating quantity')
+    }
+
+    reset({ quantity: ''})
   }
 
   useEffect(() => {
