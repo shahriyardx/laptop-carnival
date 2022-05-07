@@ -1,22 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Product = () => {
+const Product = ({ data }) => {
   return (
     <div className='rounded-lg bg-zinc-200 overflow-hidden p-4 sm:p-7'>
-      <img src="/images/products/macbook.jpg" alt="Macbook" className='w-full aspect-video rounded-lg' />
+      <img src={data.image} alt="Macbook" className='w-full aspect-video rounded-lg' />
 
       <div></div>
-      <h2 className='text-2xl font-bold mt-2'>MacBook Pro 2022</h2>
-      <p className='text-zinc-700 text-sm'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt voluptatibus laboriosam ex cupiditate...</p>
+      <h2 className='text-2xl font-bold mt-2'>{data.title}</h2>
+      <p className='text-zinc-700 text-sm'>{data.short_description}</p>
       
       <div className='mt-4 flex flex-col gap-1'>
-        <p className='text-lg font-normal'>Supplier - <span className='font-extrabold'>Whoami</span></p>
-        <p className='text-lg font-normal'>Price - <span className='font-extrabold'>$100</span></p>
-        <p className='text-lg font-normal'>Quantity - <span className='font-extrabold'>89</span></p>
+        <p className='text-lg font-normal'>Supplier - <span className='font-extrabold'>{data.suplier}</span></p>
+        <p className='text-lg font-normal'>Price - <span className='font-extrabold'>${data.price}</span></p>
+        <p className='text-lg font-normal'>Quantity - <span className='font-extrabold'>{data.quantity}</span></p>
       </div>
 
-      <Link className='px-3 py-2 bg-indigo-500 text-white inline-block rounded-md mt-5' to="/inventory">Manage</Link>
+      <Link className='px-3 py-2 bg-indigo-500 text-white inline-block rounded-md mt-5' to={`/inventory/${data._id}`}>Manage</Link>
     </div>
   )
 }

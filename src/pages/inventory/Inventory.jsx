@@ -12,7 +12,6 @@ const Inventory = () => {
     const fetchItems = async () => {
       const { data } = await axios.get(`${API_URL}/inventory`)
       setItems(data.items)
-      console.log(data.items)
     }
 
     fetchItems()
