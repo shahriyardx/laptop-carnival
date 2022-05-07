@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import ResetPassword from './pages/ResetPassword';
 import MyItems from './pages/inventory/MyItems';
 import AddItem from './pages/inventory/AddItem';
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
 
         <Route path="/inventory/:id" element={<RequireAuth><SingleItem /></RequireAuth>} />
       </Routes>
+      <Toaster />
     </Layout>
   )
 }

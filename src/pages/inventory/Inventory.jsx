@@ -4,6 +4,7 @@ import { BiTrashAlt } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import { API_URL } from '../../../config'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const Inventory = () => {
   const [items, setItems] = useState([])
@@ -17,6 +18,23 @@ const Inventory = () => {
     fetchItems()
       .catch(console.error)
   }, [])
+
+  const handleDelete = async (itemId) => {
+    const confirmed = window.confirm("Are you sure?")
+
+    if(confirmed) {
+      try {
+        const response = await axios.delete(`${API_URL}/inventory/${itemId}`)
+        if (response.data.error) {
+          return toast.error(response.data.error)
+        }
+        toast.success('Item deleted')
+        setItems(items.filter(item => item._id !== itemId))
+      } catch (err) {
+        return toast.error('Something went wrong. Please try again.')
+      }
+    } 
+  }
 
   return (
     <div>
@@ -42,7 +60,7 @@ const Inventory = () => {
                 <td className='px-5 py-2'>{item.brand}</td>
                 <td className='px-5 py-2'>{item.quantity ? 'In Stock' : 'Out Of Stock'}</td>
                 <td className='flex flex-wrap gap-2 items-center pl-5 py-2'>
-                  <div className='p-2 bg-red-400 text-white text-xl rounded-full cursor-pointer'>
+                  <div onClick={() => handleDelete(item._id)} className='p-2 bg-red-400 text-white text-xl rounded-full cursor-pointer'>
                     <BiTrashAlt />
                   </div>
                   <Link className='p-2 bg-indigo-400 hover:bg-indigo-500 rounded-md text-white' to={`/inventory/${item._id}`}>Manage</Link>
