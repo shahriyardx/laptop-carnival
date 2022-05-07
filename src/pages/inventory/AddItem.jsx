@@ -1,20 +1,42 @@
+import axios from 'axios';
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import { API_URL } from '../../../config';
 import useAuth from '../../../firebase/useAuth';
 import Container from '../../components/Container/Container'
 
 const AddItem = () => {
   const auth = useAuth()
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [user, loading] = useAuthState(auth)
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     const full_data = {...data}
     full_data.suplier = user?.displayName || 'Anonymous'
     full_data.suplier_email = user?.email
 
-    console.log(full_data)
+    try {
+      const response = await axios.post(`${API_URL}/inventory/add`, full_data)
+      
+      if (response.data.error) {
+        return alert(response.data.error)
+      }
+
+      alert("Data inserted")
+      reset({
+        'title': '',
+        'short_description': '',
+        'image': '',
+        'brand': '',
+        'price': '',
+        'quantity': '',
+        'description': '',
+      })
+    } catch (err) {
+      alert("Something went wrong. Please try again")
+    }
+    
   }
 
   return (
@@ -23,7 +45,7 @@ const AddItem = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <h1 className='text-2xl font-bold'>Supplier Info</h1>
+          <h1 className='text-2xl font-bold mb-2'>Supplier Info</h1>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
             <div className='flex flex-col'>
               <label>Name</label>
@@ -36,10 +58,17 @@ const AddItem = () => {
             </div>
           </div>
 
-          <h1 className='text-2xl font-bold mt-10'>Item Info</h1>
-          <div className='mt-2'>
-            <label>Short Description</label>
-            <input type="text" {...register('short_description', { required: true })} className='w-full' required/>
+          <h1 className='text-2xl font-bold mt-10 mb-2'>Item Info</h1>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+            <div>
+              <label>Title</label>
+              <input type="text" {...register('title', { required: true })} className='w-full' required/>
+            </div>
+
+            <div>
+              <label>Short Description</label>
+              <input type="text" {...register('short_description', { required: true })} className='w-full' required/>
+            </div>
           </div>
 
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-2'>
