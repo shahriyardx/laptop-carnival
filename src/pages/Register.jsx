@@ -15,6 +15,7 @@ const Register = () => {
   const [createUserWithEmailAndPassword, user, loading, error, ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true});
   const [updateProfile, updating, update_error] = useUpdateProfile(auth);
   const [accessToken, setAccessToken] = useState(null)
+  const [registerData, setRegisterData] = useState()
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const from = location.state?.from?.pathname || "/"
@@ -22,29 +23,35 @@ const Register = () => {
   const onSubmit = async data => {
     await createUserWithEmailAndPassword(data.email, data.password)
     await updateProfile({ displayName: data.username })
-
-    try {
-      const { data: loginData } = await axios.post(`${API_URL}/login`, { email: user.user.email, username: data.username})
-      
-      if (loginData.error) {
-        return toast.error(loginData.error)
-      }
-
-      localStorage.setItem('accessToken', data.accessToken)
-      setAccessToken(loginData.accessToken)
-    } catch (err) {
-      console.log(err)
-      toast.error('Something went wrong while generating access token')
-    }
+    setRegisterData({ email: data.email, username: data.username})
   };
   
   useEffect(() => {
+    if (!accessToken && user && registerData) {
+      try {
+        axios.post(`${API_URL}/login`, registerData)
+          .then(response => {
+            const data  = response.data
+            
+            if (data.error) {
+              return toast.error(data.error)
+            }
+
+            localStorage.setItem('accessToken', data.accessToken)
+            setAccessToken(data.accessToken)
+          })
+      } catch (err) {
+        console.log(err)
+        toast.error('Something went wrong while generating access token')
+      }
+    }
+  
     if (accessToken) {
       if (user && !loading && !updating) {
         navigate(from)
       }
     }
-  }, [user, loading, updating, accessToken])
+  }, [user, loading, updating, accessToken, registerData])
 
   return (
     <div>

@@ -14,11 +14,13 @@ const AddItem = () => {
 
   const onSubmit = async data => {
     const full_data = {...data}
-    full_data.suplier = user?.displayName || 'Anonymous'
-    full_data.suplier_email = user?.email
-
     try {
-      const response = await axios.post(`${API_URL}/inventory/add`, full_data)
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      }
+      const response = await axios.post(`${API_URL}/inventory/add`, full_data, config)
       
       if (response.data.error) {
         return toast.error(response.data.error)

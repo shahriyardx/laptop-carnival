@@ -24,7 +24,12 @@ const Inventory = () => {
 
     if(confirmed) {
       try {
-        const response = await axios.delete(`${API_URL}/inventory/${itemId}`)
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        }
+        const response = await axios.delete(`${API_URL}/inventory/${itemId}`, config)
         if (response.data.error) {
           return toast.error(response.data.error)
         }

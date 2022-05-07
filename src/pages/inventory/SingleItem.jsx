@@ -21,7 +21,12 @@ const SingleItem = () => {
     }
 
     try {
-      const { data: updatedData } = await axios.put(`${API_URL}/inventory/${item.data._id}/restock`, data)
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      }
+      const { data: updatedData } = await axios.put(`${API_URL}/inventory/${item.data._id}/restock`, data, config)
 
       if (updatedData.error) {
         return toast.error(updatedData.error)
@@ -41,7 +46,12 @@ const SingleItem = () => {
     }
 
     try {
-      const { data: updatedData } = await axios.post(`${API_URL}/inventory/${item.data._id}/delivered`)
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      }
+      const { data: updatedData } = await axios.put(`${API_URL}/inventory/${item.data._id}/delivered`, {}, config)
 
       if (updatedData.error) {
         return toast.error(updatedData.error)
@@ -57,8 +67,13 @@ const SingleItem = () => {
   useEffect(() => {
     const fetchItem = async () => {
       if (item.loaded) return
-    
-      const { data } = await axios.get(`${API_URL}/inventory/${itemId}`)
+      
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      }
+      const { data } = await axios.get(`${API_URL}/inventory/${itemId}`, config)
       if (data.error) {
         setItem({ loaded: true, data: null})
       } else {

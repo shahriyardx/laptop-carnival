@@ -5,7 +5,6 @@ import { FcGoogle } from 'react-icons/fc'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSignInWithGoogle, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import useAuth from '../../firebase/useAuth'
-import { extractQuerystring } from '@firebase/util'
 import axios from 'axios'
 import { API_URL } from '../../config'
 import toast from 'react-hot-toast'
@@ -23,44 +22,31 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = async data => {
     await signInWithEmailAndPassword(data.email, data.password)
-
-    if (!email_pass_user) {
-      return
-    }
-
-    try {
-      const { user } = email_pass_user
-      const { data } = await axios.post(`${API_URL}/login`, { email: user.email, username: user.displayName})
-      
-      if (data.error) {
-        return toast.error(data.error)
-      }
-
-      localStorage.setItem('accessToken', data.accessToken)
-      setAccessToken(data.accessToken)
-    } catch (err) {
-      toast.error('Something went wrong while generating access token')
-    }
   }
 
   const handleGoogleLogin = async () => {
-    await signInWithGoogle()
-    try {
-      const { user } = google_user
-      const { data } = await axios.post(`${API_URL}/login`, { email: user.email, username: user.displayName})
-      
-      if (data.error) {
-        return toast.error(data.error)
-      }
-
-      localStorage.setItem('accessToken', data.accessToken)
-      setAccessToken(data.accessToken)
-    } catch (err) {
-      toast.error('Something went wrong while generating access token')
-    }
+    await signInWithGoogle() 
   }
 
   useEffect(() => {
+    if (!accessToken && (google_user || email_pass_user)) {
+      try {
+        const { user } = google_user || email_pass_user
+        axios.post(`${API_URL}/login`, { email: user.email, username: user.displayName})
+          .then(response => {
+            const data  = response.data
+            
+            if (data.error) {
+              return toast.error(data.error)
+            }
+
+            localStorage.setItem('accessToken', data.accessToken)
+            setAccessToken(data.accessToken)
+          })
+      } catch (err) {
+        toast.error('Something went wrong while generating access token')
+      }
+    }
     if (accessToken) {
       if (google_user || email_pass_user) {
         navigate(from)
