@@ -25,7 +25,7 @@ const Header = () => {
           {user ? (
             <div className='flex gap-2 items-center'>
               <span className='font-bold'>{user.displayName}</span>
-              <button className='cursor-pointer px-3 py-2 rounded-md bg-red-500 text-white' onClick={() => signOut(auth)}>Logout</button>
+              <button className={styles.logout_button} onClick={() => signOut(auth)}>Logout</button>
             </div>
             ) : (
             <CustomLink to='/login' className={styles.login_button}>Login</CustomLink>
