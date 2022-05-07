@@ -22,6 +22,9 @@ const Header = () => {
 
         <div className={styles.menu}>
           <CustomLink to='/'>Home</CustomLink>
+          <CustomLink to='/inventory'>Manage Inventory</CustomLink>
+          <CustomLink to='/inventory/my'>My Items</CustomLink>
+          <CustomLink to='/inventory/add'>Add Item</CustomLink>
           {user ? (
             <div className='flex gap-2 items-center'>
               <span className='font-bold'>{user.displayName}</span>
