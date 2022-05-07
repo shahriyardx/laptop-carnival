@@ -23,7 +23,6 @@ const Register = () => {
     await createUserWithEmailAndPassword(data.email, data.password)
     await updateProfile({ displayName: data.username })
 
-    console.log(user.user.email, data.username)
     try {
       const { data: loginData } = await axios.post(`${API_URL}/login`, { email: user.user.email, username: data.username})
       
