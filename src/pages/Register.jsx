@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from '../components/Container/Container'
 import { useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../../firebase/useAuth'
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth'
+import toast from 'react-hot-toast'
+import axios from 'axios'
+import { API_URL } from '../../config'
 
 const Register = () => {
   const auth = useAuth()
@@ -11,20 +14,38 @@ const Register = () => {
   const navigate = useNavigate()
   const [createUserWithEmailAndPassword, user, loading, error, ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true});
   const [updateProfile, updating, update_error] = useUpdateProfile(auth);
-  
+  const [accessToken, setAccessToken] = useState(null)
+
   const { register, handleSubmit, formState: { errors } } = useForm();
   const from = location.state?.from?.pathname || "/"
 
   const onSubmit = async data => {
     await createUserWithEmailAndPassword(data.email, data.password)
     await updateProfile({ displayName: data.username })
+
+    console.log(user.user.email, data.username)
+    try {
+      const { data: loginData } = await axios.post(`${API_URL}/login`, { email: user.user.email, username: data.username})
+      
+      if (loginData.error) {
+        return toast.error(loginData.error)
+      }
+
+      localStorage.setItem('accessToken', data.accessToken)
+      setAccessToken(loginData.accessToken)
+    } catch (err) {
+      console.log(err)
+      toast.error('Something went wrong while generating access token')
+    }
   };
   
   useEffect(() => {
-    if (user && !loading && !updating) {
-      navigate(from)
+    if (accessToken) {
+      if (user && !loading && !updating) {
+        navigate(from)
+      }
     }
-  }, [user, loading, updating])
+  }, [user, loading, updating, accessToken])
 
   return (
     <div>
