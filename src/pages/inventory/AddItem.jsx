@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { API_URL } from '../../../config';
 import useAuth from '../../../firebase/useAuth';
 import Container from '../../components/Container/Container'
@@ -20,10 +21,10 @@ const AddItem = () => {
       const response = await axios.post(`${API_URL}/inventory/add`, full_data)
       
       if (response.data.error) {
-        return alert(response.data.error)
+        return toast.error(response.data.error)
       }
 
-      alert("Data inserted")
+      toast.success("Data inserted")
       reset({
         'title': '',
         'short_description': '',
@@ -34,7 +35,7 @@ const AddItem = () => {
         'description': '',
       })
     } catch (err) {
-      alert("Something went wrong. Please try again")
+      toast.error("Something went wrong. Please try again")
     }
     
   }

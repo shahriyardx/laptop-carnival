@@ -29,6 +29,7 @@ const SingleItem = () => {
 
       setItem({...item, data: updatedData})
       reset({ quantity: ''})
+      toast.success("Item's stock has been updated.")
     } catch (err) {
       toast.error('Something went wrong while updating quantity')
     }
