@@ -1,9 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from '../../components/Container/Container'
 import { BiTrashAlt } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+import { API_URL } from '../../../config'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const MyItems = () => {
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      }
+      const { data } = await axios.get(`${API_URL}/inventory/my`, config)
+      setItems(data.items)
+    }
+
+    fetchItems()
+      .catch(console.error)
+  }, [])
+
+  const handleDelete = async (itemId) => {
+    const confirmed = window.confirm("Are you sure?")
+
+    if(confirmed) {
+      try {
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        }
+        const response = await axios.delete(`${API_URL}/inventory/${itemId}`, config)
+        if (response.data.error) {
+          return toast.error(response.data.error)
+        }
+        toast.success('Item deleted')
+        setItems(items.filter(item => item._id !== itemId))
+      } catch (err) {
+        return toast.error('Something went wrong. Please try again.')
+      }
+    } 
+  }
+
   return (
     <div>
       <Container className='py-20'>
@@ -21,18 +63,20 @@ const MyItems = () => {
           </thead>
 
           <tbody>
-            <tr className='odd:bg-zinc-200'>
-              <td className='px-5 py-2'>1</td>
-              <td className='px-5 py-2'>Macbook Pro 2022</td>
-              <td className='px-5 py-2'>Apple</td>
-              <td className='px-5 py-2'>In Stock</td>
-              <td className='flex flex-wrap gap-2 items-center pl-5 py-2'>
-                <div className='p-2 bg-red-400 text-white text-xl rounded-full cursor-pointer'>
-                  <BiTrashAlt />
-                </div>
-                <Link className='p-2 bg-indigo-400 hover:bg-indigo-500 rounded-md text-white' to='/inventory/1'>Manage</Link>
-              </td> 
-            </tr>
+            {items.map((item, index) => {
+              return (<tr key={item._id} className='odd:bg-zinc-200'>
+                <td className='px-5 py-2'>{index + 1}</td>
+                <td className='px-5 py-2'>{item.title}</td>
+                <td className='px-5 py-2'>{item.brand}</td>
+                <td className='px-5 py-2'>{item.quantity ? 'In Stock' : 'Out Of Stock'}</td>
+                <td className='flex flex-wrap gap-2 items-center pl-5 py-2'>
+                  <div onClick={() => handleDelete(item._id)} className='p-2 bg-red-400 text-white text-xl rounded-full cursor-pointer'>
+                    <BiTrashAlt />
+                  </div>
+                  <Link className='p-2 bg-indigo-400 hover:bg-indigo-500 rounded-md text-white' to={`/inventory/${item._id}`}>Manage</Link>
+                </td> 
+              </tr>)
+            })}
           </tbody>
         </table>
       </Container>

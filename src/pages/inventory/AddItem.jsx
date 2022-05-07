@@ -13,14 +13,13 @@ const AddItem = () => {
   const [user, loading] = useAuthState(auth)
 
   const onSubmit = async data => {
-    const full_data = {...data}
     try {
       const config = {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
       }
-      const response = await axios.post(`${API_URL}/inventory/add`, full_data, config)
+      const response = await axios.post(`${API_URL}/inventory/add`, data, config)
       
       if (response.data.error) {
         return toast.error(response.data.error)
