@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom'
 import { API_URL } from '../../../config'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import Spinner from '../../components/Spinner/Spinner'
 
 const MyItems = () => {
   const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -16,8 +18,13 @@ const MyItems = () => {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
       }
-      const { data } = await axios.get(`${API_URL}/inventory/my`, config)
-      setItems(data.items)
+      try {
+        const { data } = await axios.get(`${API_URL}/inventory/my`, config)
+        setItems(data.items)
+
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchItems()
@@ -82,6 +89,8 @@ const MyItems = () => {
             })}
           </tbody>
         </table>
+
+        {loading && <Spinner />}
       </Container>
     </div>
   )

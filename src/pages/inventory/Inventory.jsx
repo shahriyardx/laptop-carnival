@@ -5,14 +5,20 @@ import { Link } from 'react-router-dom'
 import { API_URL } from '../../../config'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import Spinner from '../../components/Spinner/Spinner'
 
 const Inventory = () => {
   const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchItems = async () => {
-      const { data } = await axios.get(`${API_URL}/inventory`)
-      setItems(data.items)
+      try {
+        const { data } = await axios.get(`${API_URL}/inventory`)
+        setItems(data.items)
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchItems()
@@ -77,6 +83,8 @@ const Inventory = () => {
             })}
           </tbody>
         </table>
+
+        {loading && <Spinner />}
       </Container>
     </div>
   )

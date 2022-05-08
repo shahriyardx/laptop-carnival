@@ -4,14 +4,20 @@ import { Link } from 'react-router-dom'
 import { API_URL } from '../../../config'
 import Container from '../../components/Container/Container'
 import Product from '../../components/Product/Product'
+import Spinner from '../../components/Spinner/Spinner'
 
 const Products = () => {
   const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
   
   useEffect(() => {
     const fetchItems = async () => {
-      const { data } = await axios.get(`${API_URL}/inventory?limit=6`)
-      setItems(data.items)
+      try {
+        const { data } = await axios.get(`${API_URL}/inventory?limit=6`)
+        setItems(data.items)
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchItems()
@@ -27,6 +33,8 @@ const Products = () => {
           return <Product key={item._id} data={item} />
         })}
       </div>
+
+      {loading && <Spinner />}
 
       <div className='mt-10 text-center'>
         <Link className='text-lg uppercase font-bold bg-green-500 px-4 py-3 text-white rounded-md' to="/inventory">Manage Inventory</Link>
