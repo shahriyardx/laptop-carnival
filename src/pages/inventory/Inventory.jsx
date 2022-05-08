@@ -6,6 +6,7 @@ import { API_URL } from '../../../config'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import Spinner from '../../components/Spinner/Spinner'
+import Title from '../../components/Title/Title'
 
 const Inventory = () => {
   const [items, setItems] = useState([])
@@ -49,6 +50,7 @@ const Inventory = () => {
 
   return (
     <div>
+      <Title title='Manage Inventory' />
       <Container className='py-20'>
         <div className='flex justify-between items-center'>
           <h1 className='text-3xl font-bold text-center mb-10'>Manage Inventory</h1>

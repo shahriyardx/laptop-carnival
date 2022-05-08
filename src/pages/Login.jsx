@@ -8,6 +8,7 @@ import useAuth from '../../firebase/useAuth'
 import axios from 'axios'
 import { API_URL } from '../../config'
 import toast from 'react-hot-toast'
+import Title from '../components/Title/Title'
 
 const Login = () => {
   const auth = useAuth()
@@ -56,6 +57,7 @@ const Login = () => {
 
   return (
     <div>
+      <Title title='Login' />
       <Container className='py-20'>
         <h1 className='text-3xl font-bold text-center mb-5'>Login</h1>
 

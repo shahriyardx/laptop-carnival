@@ -2,6 +2,7 @@ import React from 'react'
 import Container from '../components/Container/Container'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import Title from '../components/Title/Title'
 
 const ResetPassword = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -9,6 +10,7 @@ const ResetPassword = () => {
 
   return (
     <div>
+      <Title title='Reset Password' />
       <Container className='py-20'>
         <h1 className='text-3xl font-bold text-center mb-5'>Reset Password</h1>
 

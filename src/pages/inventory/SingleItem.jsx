@@ -6,6 +6,7 @@ import { API_URL } from '../../../config'
 import { Link, useParams } from 'react-router-dom'
 import Markdown from 'marked-react'
 import toast from 'react-hot-toast'
+import Title from '../../components/Title/Title'
 
 const SingleItem = () => {
   const [item, setItem] = useState({data: null, loaded: false})
@@ -83,11 +84,15 @@ const SingleItem = () => {
   return (
     <Container className='py-20'>
       {!item.loaded && (
-        <h1 className='text-3xl text-center font-bold'>Please wait..</h1>
+        <>
+          <Title title='Please wait...' />
+          <h1 className='text-3xl text-center font-bold'>Please wait..</h1>
+        </>
       )}
 
       {(item.loaded && !item.data) && (
         <div className='text-center'>
+          <Title title='Item Not Found' />
           <h1 className='text-3xl text-red-500 text-center font-bold'>Item not found</h1>
           <Link to="/inventory" className='px-5 py-3 bg-indigo-500 rounded-md text-white inline-block mt-5'>Go Back</Link>
         </div>
@@ -95,6 +100,7 @@ const SingleItem = () => {
 
       {item.data && (
         <>
+          <Title title={item.data.title} />
           <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
             <div>
               <img src={item.data.image} alt="Macbook" className='rounded-lg'/>

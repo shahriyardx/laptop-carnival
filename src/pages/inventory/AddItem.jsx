@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { API_URL } from '../../../config';
 import useAuth from '../../../firebase/useAuth';
 import Container from '../../components/Container/Container'
+import Title from '../../components/Title/Title';
 
 const AddItem = () => {
   const auth = useAuth()
@@ -43,6 +44,7 @@ const AddItem = () => {
 
   return (
     <Container className='py-20'>
+       <Title title='Add Item' />
       <h1 className='text-3xl font-bold text-center mb-10'>Add Item</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>

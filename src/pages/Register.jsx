@@ -7,6 +7,7 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { API_URL } from '../../config'
+import Title from '../components/Title/Title'
 
 const Register = () => {
   const auth = useAuth()
@@ -55,6 +56,7 @@ const Register = () => {
 
   return (
     <div>
+      <Title title='Register' />
       <Container className='py-20'>
         <h1 className='text-3xl font-bold text-center mb-5'>Register</h1>
 
