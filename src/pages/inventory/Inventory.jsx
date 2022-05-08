@@ -62,8 +62,8 @@ const Inventory = () => {
             <tr>
               <th className='px-5 py-3'>SL.</th>
               <th className='px-5 py-3'>Name</th>
-              <th className='px-5 py-3 hidden md:block'>Brand</th>
-              <th className='px-5 py-3 hidden md:block'>Stock</th>
+              <th className='px-5 py-3 hidden md:table-cell'>Brand</th>
+              <th className='px-5 py-3 hidden md:table-cell'>Stock</th>
               <th className='px-5 py-3'>Manage</th>
             </tr>
           </thead>
@@ -73,8 +73,8 @@ const Inventory = () => {
               return (<tr key={item._id} className='odd:bg-zinc-200'>
                 <td className='px-5 py-2'>{index + 1}</td>
                 <td className='px-5 py-2'>{item.title}</td>
-                <td className='px-5 py-2 hidden md:block'>{item.brand}</td>
-                <td className='px-5 py-2 hidden md:block'>{item.quantity ? 'In Stock' : 'Out Of Stock'}</td>
+                <td className='px-5 py-2 hidden md:table-cell'>{item.brand}</td>
+                <td className='px-5 py-2 hidden md:table-cell'>{item.quantity ? 'In Stock' : 'Out Of Stock'}</td>
                 <td className='flex flex-wrap gap-2 items-center pl-5 py-2'>
                   <div onClick={() => handleDelete(item._id)} className='p-2 bg-red-400 text-white text-xl rounded-full cursor-pointer'>
                     <BiTrashAlt />

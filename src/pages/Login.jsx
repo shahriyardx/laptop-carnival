@@ -9,6 +9,7 @@ import axios from 'axios'
 import { API_URL } from '../../config'
 import toast from 'react-hot-toast'
 import Title from '../components/Title/Title'
+import Spinner from '../components/Spinner/Spinner'
 
 const Login = () => {
   const auth = useAuth()
@@ -76,8 +77,10 @@ const Login = () => {
             </div>
           </div>
           <div className='grid grid-cols-3 gap-4 mt-5'>
-            <input className='py-3 bg-indigo-500 text-white rounded-md cursor-pointer' type="submit" value='Login' />
-            <button onClick={handleGoogleLogin} type='button' className='py-3 bg-black col-span-2 flex items-center gap-2 justify-center rounded-md text-white'><FcGoogle className='text-2xl' /> Google</button>
+            <input className='py-3 bg-indigo-500 text-white rounded-md cursor-pointer' type="submit" value={email_pass_loading ? 'Please Wait...' : 'Login'} />
+            <button onClick={handleGoogleLogin} type='button' className='py-3 bg-black col-span-2 flex items-center gap-2 justify-center rounded-md text-white'><FcGoogle className='text-2xl' /> 
+              {google_loading ? 'Please Wait...' : 'Google'}
+            </button>
           </div>
 
           <p className='text-red-500 mt-2'>{google_error ? google_error.message : email_pass_error ? email_pass_error.message : null}</p>

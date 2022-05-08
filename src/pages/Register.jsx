@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import { API_URL } from '../../config'
 import Title from '../components/Title/Title'
+import Spinner from '../components/Spinner/Spinner'
 
 const Register = () => {
   const auth = useAuth()
@@ -82,7 +83,7 @@ const Register = () => {
           </div>
           
           <button type='submit' className='px-4 py-3 bg-indigo-500 text-white rounded-md cursor-pointer mt-5'>
-            Register
+            {loading ? 'Please Wait...' : 'Register'}
           </button>
           <p className='text-red-500 mt-2'>{error ? error.message : null}</p>
 
