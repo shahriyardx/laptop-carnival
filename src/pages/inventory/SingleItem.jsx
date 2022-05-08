@@ -3,7 +3,7 @@ import Container from '../../components/Container/Container'
 import { useForm } from 'react-hook-form' 
 import axios from 'axios'
 import { API_URL } from '../../../config'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Markdown from 'marked-react'
 import toast from 'react-hot-toast'
 
@@ -114,6 +114,7 @@ const SingleItem = () => {
                 <p className='font-bold text-xl'>Brand - <span className='font-normal text-blue-500'>{item.data.brand}</span></p>
                 <p className='font-bold text-xl'>Supplier - <span className='font-normal text-blue-500'>{item.data.suplier}</span></p>
                 <p className='font-bold text-xl'>Stock - <span className='font-normal text-blue-500'>{item.data.quantity}</span></p>
+                <p className='font-bold text-xl'>Sold - <span className='font-normal text-blue-500'>{item.data.sold}</span></p>
               </div>
 
               <div className='mt-4'>
