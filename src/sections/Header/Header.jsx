@@ -30,7 +30,7 @@ const Header = () => {
               <CustomLink to='/inventory/add'>Add Item</CustomLink>
               
               <div className='flex gap-2 items-center'>
-                <span className='font-bold hidden'>{user.displayName}</span>
+                <span className='font-bold hidden md:inline-block'>{user.displayName}</span>
                 <button className='cursor-pointer px-3 py-2 rounded-md bg-red-500 text-white' onClick={() => signOut(auth)}>Logout</button>
               </div>
             </>
