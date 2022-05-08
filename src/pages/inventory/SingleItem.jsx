@@ -102,7 +102,7 @@ const SingleItem = () => {
         <>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
             <div>
-              <img src="/images/products/macbook.jpg" alt="Macbook" className='rounded-lg'/>
+              <img src={item.data.image} alt="Macbook" className='rounded-lg'/>
             </div>
 
             <div>

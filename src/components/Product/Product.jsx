@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom'
 const Product = ({ data }) => {
   return (
     <div className='rounded-lg bg-zinc-200 overflow-hidden p-4 sm:p-7'>
-      <img src={data.image} alt="Macbook" className='w-full aspect-video rounded-lg' />
+      <img src={data.image} alt="Macbook" className='w-full aspect-video rounded-lg object-cover' />
 
-      <div></div>
       <h2 className='text-2xl font-bold mt-2'>{data.title}</h2>
       <p className='text-zinc-700 text-sm'>{data.short_description}</p>
       
