@@ -23,6 +23,7 @@ const Header = () => {
 
         <div className={`z-50 absolute sm:static top-16 left-0 w-full md:w-auto px-4 py-5 sm:p-0 bg-black sm:bg-transparent text-white sm:text-black flex flex-col sm:flex-row sm:items-center sm:ml-auto gap-2 md:gap-4 ${open ? 'flex' : 'hidden sm:flex'}`}>
           <CustomLink to='/'>Home</CustomLink>
+          <CustomLink to='/blogs'>Blogs</CustomLink>
           {user ? (
             <>
               <CustomLink to='/inventory'>Manage Inventory</CustomLink>

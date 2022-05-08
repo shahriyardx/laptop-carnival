@@ -13,12 +13,14 @@ import ResetPassword from './pages/ResetPassword';
 import MyItems from './pages/inventory/MyItems';
 import AddItem from './pages/inventory/AddItem';
 import { Toaster } from 'react-hot-toast'
+import Blogs from './pages/Blogs/Blogs';
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/blogs" element={<Blogs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reset" element={<ResetPassword />} />
