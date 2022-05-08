@@ -1,13 +1,7 @@
 import React from 'react'
-import toast from 'react-hot-toast'
 import Container from '../../components/Container/Container'
 
 const Features = () => {
-  const handleSubscription = e => {
-    e.preventDefault()
-    toast.success('Subscription complete')
-    e.target.reset()
-  }
   return (
     <div className='bg-zinc-800 text-zinc-200'>
       <Container className='py-10 sm:py-20'>
