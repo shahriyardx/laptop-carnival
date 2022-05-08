@@ -10,7 +10,7 @@ import { BiMenu } from 'react-icons/bi'
 const Header = () => {
   const auth = useAuth()
   const [user, loading, error] = useAuthState(auth);
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   
   return (
     <header>
