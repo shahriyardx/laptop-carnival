@@ -13,6 +13,22 @@ const SingleItem = () => {
   const params = useParams()
   const itemId = params.id
   
+  useEffect(() => {
+    const fetchItem = async () => {
+      if (item.loaded) return
+      
+      const { data } = await axios.get(`${API_URL}/inventory/${itemId}`)
+      if (data.error) {
+        setItem({ loaded: true, data: null})
+      } else {
+        setItem({ loaded: true, data: data})
+      }
+    }
+
+    fetchItem()
+      .catch(console.error)
+  }, [])
+
   const updateStock = async (data) => {
     const quantity = data.quantity
 
@@ -63,27 +79,6 @@ const SingleItem = () => {
       toast.error('Something went wrong while updating quantity')
     }
   }
-
-  useEffect(() => {
-    const fetchItem = async () => {
-      if (item.loaded) return
-      
-      const config = {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-        }
-      }
-      const { data } = await axios.get(`${API_URL}/inventory/${itemId}`, config)
-      if (data.error) {
-        setItem({ loaded: true, data: null})
-      } else {
-        setItem({ loaded: true, data: data})
-      }
-    }
-
-    fetchItem()
-      .catch(console.error)
-  }, [])
   
   return (
     <Container className='py-20'>
