@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom'
 import Markdown from 'marked-react'
 import toast from 'react-hot-toast'
 import Title from '../../components/Title/Title'
+import { BiLeftArrow } from 'react-icons/bi'
 
 const SingleItem = () => {
   const [item, setItem] = useState({data: null, loaded: false})
@@ -100,7 +101,11 @@ const SingleItem = () => {
 
       {item.data && (
         <>
-          <Title title={item.data.title} />
+          <Title title={item.data.title } />
+          <Link to='/inventory' className='flex gap-2 items-center mb-5 px-3 py-2rounded-md text-indigo-500'>
+            <BiLeftArrow className='text-2xl' />
+            Manage Inventories
+          </Link>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
             <div>
               <img src={item.data.image} alt="Macbook" className='rounded-lg'/>
