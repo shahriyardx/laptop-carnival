@@ -3,10 +3,22 @@ import Container from '../components/Container/Container'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import Title from '../components/Title/Title'
+import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth'
+import toast from 'react-hot-toast'
+import useAuth from '../../firebase/useAuth'
 
 const ResetPassword = () => {
+  const auth = useAuth()
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
+  const onSubmit = async data => {
+    await sendPasswordResetEmail(data.email)
+    if (error) {
+      return toast.error(error.message)
+    } else {
+      toast.success("Mail sent")
+    }
+  }
 
   return (
     <div>
@@ -23,7 +35,7 @@ const ResetPassword = () => {
             </div>
           </div>
             
-          <input className='px-4 py-3 bg-indigo-500 text-white rounded-md cursor-pointer mt-5' type="submit" value='Reset' />
+          <input className='px-4 py-3 bg-indigo-500 text-white rounded-md cursor-pointer mt-5' type="submit" value={sending ? 'Sending...' : 'Reset'} />
 
           <Link to='/login' className='block text-blue-500 mt-5'>Already have an account?</Link>
           <Link to='/register' className='block text-blue-500'>Don't have an account?</Link>
