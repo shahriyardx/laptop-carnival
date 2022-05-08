@@ -44,7 +44,10 @@ const Inventory = () => {
   return (
     <div>
       <Container className='py-20'>
-        <h1 className='text-3xl font-bold text-center mb-10'>Manage Inventory</h1>
+        <div className='flex justify-between items-center'>
+          <h1 className='text-3xl font-bold text-center mb-10'>Manage Inventory</h1>
+          <Link to='/inventory/add' className='px-5 py-3 bg-indigo-500 text-white rounded-md'>Add New Item</Link>
+        </div>
 
         <table className='table-auto w-full text-left rounded-lg overflow-hidden'>
           <thead className='bg-black text-white'>
